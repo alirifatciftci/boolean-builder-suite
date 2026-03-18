@@ -51,7 +51,7 @@ const TruthTablePage = () => {
             <span className="font-semibold hidden sm:inline">VoltLogic</span>
           </Link>
           <div className="w-px h-6 bg-border" />
-          <h1 className="text-sm font-bold">Truth Table Generator</h1>
+          <h1 className="text-sm font-bold">Doğruluk Tablosu Oluşturucu</h1>
         </div>
 
         <div className="flex items-center gap-2">
@@ -60,7 +60,7 @@ const TruthTablePage = () => {
               to="/kmap"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-primary bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-all"
             >
-              Open in K-Map <ArrowRight size={12} />
+              K-Map'te Aç <ArrowRight size={12} />
             </Link>
           )}
         </div>
@@ -70,19 +70,19 @@ const TruthTablePage = () => {
         {/* Expression input */}
         <div className="mb-8">
           <label className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-3">
-            Boolean Expression
+            Boolean İfadesi
           </label>
           <div className="flex gap-3">
             <input
               type="text"
               value={expression}
               onChange={(e) => setExpression(e.target.value)}
-              placeholder="Enter expression: AB + A'B', (A+B)C', A^B ..."
+              placeholder="İfade girin: AB + A'B', (A+B)C', A^B ..."
               className="flex-1 px-5 py-3 rounded-xl bg-card border border-border text-foreground font-mono text-lg focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-muted-foreground/50"
             />
             <button
               onClick={() => setExpression('')}
-              className="px-4 py-3 rounded-xl bg-secondary text-muted-foreground hover:text-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
+              className="px-4 py-3 rounded-xl bg-secondary text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
             >
               <Trash2 size={18} />
             </button>
@@ -90,7 +90,7 @@ const TruthTablePage = () => {
 
           {/* Examples */}
           <div className="flex flex-wrap gap-2 mt-3">
-            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider self-center mr-1">Examples:</span>
+            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider self-center mr-1">Örnekler:</span>
             {EXAMPLES.map((ex) => (
               <button
                 key={ex}
@@ -109,12 +109,12 @@ const TruthTablePage = () => {
           {/* Syntax help */}
           <div className="mt-3 p-3 rounded-lg bg-card border border-border">
             <p className="text-[11px] text-muted-foreground leading-relaxed">
-              <span className="font-bold text-foreground">Syntax:</span>{' '}
+              <span className="font-bold text-foreground">Sözdizimi:</span>{' '}
               NOT = <code className="text-primary">A'</code> veya <code className="text-primary">!A</code>,{' '}
               AND = <code className="text-primary">AB</code> veya <code className="text-primary">A.B</code>,{' '}
               OR = <code className="text-primary">A+B</code>,{' '}
               XOR = <code className="text-primary">A^B</code>,{' '}
-              Parentheses = <code className="text-primary">(A+B)'</code>
+              Parantez = <code className="text-primary">(A+B)'</code>
             </p>
           </div>
         </div>
@@ -125,13 +125,13 @@ const TruthTablePage = () => {
             <div>
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                  Truth Table — {result.rows.length} rows
+                  Doğruluk Tablosu — {result.rows.length} satır
                 </h3>
                 <button
                   onClick={handleCopy}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
                 >
-                  {copied ? <><Check size={12} className="text-primary" /> Copied!</> : <><Copy size={12} /> Copy</>}
+                  {copied ? <><Check size={12} className="text-primary" /> Kopyalandı!</> : <><Copy size={12} /> Kopyala</>}
                 </button>
               </div>
 
@@ -184,14 +184,14 @@ const TruthTablePage = () => {
             {/* Summary sidebar */}
             <div className="lg:w-72 space-y-4">
               <div className="p-4 rounded-xl bg-card border border-border">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">Expression</span>
+                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">İfade</span>
                 <p className="font-mono text-lg font-bold text-foreground break-all">
                   F = {expression}
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-card border border-border">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">Variables</span>
+                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">Değişkenler</span>
                 <div className="flex gap-2">
                   {variables.map(v => (
                     <span key={v} className="px-3 py-1.5 rounded-lg bg-primary/10 text-primary font-mono font-bold text-sm">
@@ -220,22 +220,22 @@ const TruthTablePage = () => {
               )}
 
               <div className="p-4 rounded-xl bg-card border border-border">
-                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">Statistics</span>
+                <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">İstatistikler</span>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Variables</span>
+                    <span className="text-muted-foreground">Değişkenler</span>
                     <span className="font-mono font-bold">{variables.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total rows</span>
+                    <span className="text-muted-foreground">Toplam satır</span>
                     <span className="font-mono font-bold">{result.rows.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Ones (1)</span>
+                    <span className="text-muted-foreground">Birler (1)</span>
                     <span className="font-mono font-bold text-primary">{minterms.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Zeros (0)</span>
+                    <span className="text-muted-foreground">Sıfırlar (0)</span>
                     <span className="font-mono font-bold">{maxterms.length}</span>
                   </div>
                 </div>

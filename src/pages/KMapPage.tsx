@@ -67,7 +67,7 @@ const KMapPage = () => {
             <span className="font-semibold hidden sm:inline">VoltLogic</span>
           </Link>
           <div className="w-px h-6 bg-border" />
-          <h1 className="text-sm font-bold">Karnaugh Map Solver</h1>
+          <h1 className="text-sm font-bold">Karnaugh Haritası Çözücü</h1>
         </div>
 
         <div className="flex items-center gap-3">
@@ -76,7 +76,7 @@ const KMapPage = () => {
             onClick={resetTable}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
           >
-            <RotateCcw size={12} /> Reset
+            <RotateCcw size={12} /> Sıfırla
           </button>
 
           {/* Variable selector */}
@@ -89,9 +89,9 @@ const KMapPage = () => {
               }}
               className="appearance-none bg-secondary text-secondary-foreground text-sm font-medium px-4 py-2 pr-8 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              <option value={2}>2 Variables</option>
-              <option value={3}>3 Variables</option>
-              <option value={4}>4 Variables</option>
+              <option value={2}>2 Değişken</option>
+              <option value={3}>3 Değişken</option>
+              <option value={4}>4 Değişken</option>
             </select>
             <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
           </div>
@@ -104,20 +104,20 @@ const KMapPage = () => {
           <div>
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                Truth Table
+                Doğruluk Tablosu
               </h3>
               <div className="flex gap-1.5">
                 <button
                   onClick={() => setAll(0)}
                   className="px-2.5 py-1 rounded text-[10px] font-bold bg-secondary text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  All 0
+                  Hepsi 0
                 </button>
                 <button
                   onClick={() => setAll(1)}
                   className="px-2.5 py-1 rounded text-[10px] font-bold bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                 >
-                  All 1
+                  Hepsi 1
                 </button>
               </div>
             </div>
@@ -271,7 +271,7 @@ const KMapPage = () => {
                 <span className={`text-[10px] font-black uppercase tracking-[0.2em] block mb-2 ${
                   outputMode === 'SOP' ? 'text-primary' : 'text-violet-400'
                 }`}>
-                  Simplified Expression ({outputMode})
+                  Sadeleştirilmiş İfade ({outputMode})
                 </span>
                 <div className="text-xl font-mono font-bold text-foreground tracking-tight break-all">
                   F = {expression}
@@ -299,10 +299,10 @@ const KMapPage = () => {
             <div className="mt-auto pt-6">
               <div className="p-4 rounded-xl bg-background border border-border">
                 <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  Click cells to cycle: <span className="text-foreground font-semibold">0</span> →{' '}
+                  Hücrelere tıklayarak değiştirin: <span className="text-foreground font-semibold">0</span> →{' '}
                   <span className="text-primary font-semibold">1</span> →{' '}
                   <span className="text-amber-400 font-semibold">X</span> (don't care) → 0.
-                  The expression updates in real-time.
+                  İfade gerçek zamanlı güncellenir.
                 </p>
               </div>
             </div>

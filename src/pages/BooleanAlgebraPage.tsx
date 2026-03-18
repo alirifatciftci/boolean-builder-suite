@@ -81,7 +81,7 @@ const BooleanAlgebraPage = () => {
             <span className="font-semibold hidden sm:inline">VoltLogic</span>
           </Link>
           <div className="w-px h-6 bg-border" />
-          <h1 className="text-sm font-bold">Boolean Algebra</h1>
+          <h1 className="text-sm font-bold">Boolean Cebri</h1>
         </div>
 
         <div className="flex items-center gap-2">
@@ -90,7 +90,7 @@ const BooleanAlgebraPage = () => {
               to="/kmap"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-primary bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-all"
             >
-              Open in K-Map <ArrowRight size={12} />
+              K-Map'te Aç <ArrowRight size={12} />
             </Link>
           )}
           {result && (
@@ -98,7 +98,7 @@ const BooleanAlgebraPage = () => {
               to="/truth-table"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/20 transition-all"
             >
-              Truth Table <ArrowRight size={12} />
+              Doğruluk Tablosu <ArrowRight size={12} />
             </Link>
           )}
         </div>
@@ -108,19 +108,19 @@ const BooleanAlgebraPage = () => {
         {/* Input */}
         <div className="mb-8">
           <label className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-3">
-            Boolean Expression
+            Boolean İfadesi
           </label>
           <div className="flex gap-3">
             <input
               type="text"
               value={expression}
               onChange={(e) => setExpression(e.target.value)}
-              placeholder="Enter expression: AB + A'B', (A+B)C', A^B ..."
+              placeholder="İfade girin: AB + A'B', (A+B)C', A^B ..."
               className="flex-1 px-5 py-3 rounded-xl bg-card border border-border text-foreground font-mono text-lg focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-muted-foreground/50"
             />
             <button
               onClick={() => setExpression('')}
-              className="px-4 py-3 rounded-xl bg-secondary text-muted-foreground hover:text-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
+              className="px-4 py-3 rounded-xl bg-secondary text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
             >
               <Trash2 size={18} />
             </button>
@@ -152,7 +152,7 @@ const BooleanAlgebraPage = () => {
             {/* Input expression */}
             <div className="p-5 rounded-xl bg-card border border-border">
               <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-2">
-                Input Expression
+                Girilen İfade
               </span>
               <div className="text-xl font-mono font-bold text-foreground break-all">
                 F({variables.join(', ')}) = {expression}
@@ -166,7 +166,7 @@ const BooleanAlgebraPage = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <ArrowRightLeft size={14} className="text-primary" />
                     <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
-                      Simplified SOP
+                      Sadeleştirilmiş SOP
                     </span>
                   </div>
                   <div className="text-lg font-mono font-bold text-foreground break-all">
@@ -178,7 +178,7 @@ const BooleanAlgebraPage = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <ArrowRightLeft size={14} className="text-violet-400" />
                     <span className="text-[10px] font-black text-violet-400 uppercase tracking-[0.2em]">
-                      Simplified POS
+                      Sadeleştirilmiş POS
                     </span>
                   </div>
                   <div className="text-lg font-mono font-bold text-foreground break-all">
@@ -191,12 +191,12 @@ const BooleanAlgebraPage = () => {
             {/* Canonical forms */}
             <div className="space-y-4">
               <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
-                Canonical Forms
+                Kanonik Formlar
               </h3>
 
               <div className="p-5 rounded-xl bg-card border border-border">
                 <span className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] block mb-2">
-                  Canonical SOP (Minterms)
+                  Kanonik SOP (Minterm'ler)
                 </span>
                 <p className="text-xs font-mono text-muted-foreground mb-2">
                   &Sigma;m({canonical.minterms.join(', ')})
@@ -208,7 +208,7 @@ const BooleanAlgebraPage = () => {
 
               <div className="p-5 rounded-xl bg-card border border-border">
                 <span className="text-[10px] font-black text-rose-400 uppercase tracking-[0.2em] block mb-2">
-                  Canonical POS (Maxterms)
+                  Kanonik POS (Maxterm'ler)
                 </span>
                 <p className="text-xs font-mono text-muted-foreground mb-2">
                   &Pi;M({canonical.maxterms.join(', ')})
@@ -222,7 +222,7 @@ const BooleanAlgebraPage = () => {
             {/* Quick truth table */}
             <div>
               <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-3">
-                Truth Table Preview
+                Doğruluk Tablosu Önizleme
               </h3>
               <div className="bg-card rounded-xl border border-border overflow-hidden">
                 <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
@@ -257,7 +257,7 @@ const BooleanAlgebraPage = () => {
             {variables.length > 4 && (
               <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
                 <p className="text-sm text-amber-400">
-                  K-Map simplification is available for 2-4 variables. Your expression has {variables.length} variables.
+                  K-Map sadeleştirme 2-4 değişken için kullanılabilir. İfadeniz {variables.length} değişkene sahip.
                 </p>
               </div>
             )}
@@ -269,8 +269,8 @@ const BooleanAlgebraPage = () => {
             </div>
             <p className="text-muted-foreground">
               {expression.length === 0
-                ? 'Enter a Boolean expression to analyze.'
-                : 'Invalid expression. Check your syntax and try again.'}
+                ? 'Analiz etmek için bir Boolean ifadesi girin.'
+                : 'Geçersiz ifade. Sözdizimini kontrol edip tekrar deneyin.'}
             </p>
           </div>
         )}

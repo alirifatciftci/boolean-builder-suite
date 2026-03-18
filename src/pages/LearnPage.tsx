@@ -23,9 +23,9 @@ const lessons: Lesson[] = [
     icon: Zap,
     color: 'text-emerald-400',
     sections: [
-      { heading: 'What is AND Gate?', content: 'AND gate is a basic digital logic gate that outputs 1 (HIGH) only when ALL of its inputs are 1. If any input is 0, the output is 0. It implements logical conjunction.' },
-      { heading: 'Symbol & Expression', content: 'Boolean expression: F = A · B (or simply AB). The AND operation is also called logical multiplication.' },
-      { heading: 'Applications', content: 'AND gates are used in enable circuits, address decoding, and creating more complex logic functions. They are fundamental building blocks of digital systems.' },
+      { heading: 'AND Gate Nedir?', content: 'AND kapısı, tüm girişleri 1 (HIGH) olduğunda çıkışı 1 veren temel bir dijital mantık kapısıdır. Herhangi bir giriş 0 ise çıkış 0 olur. Mantıksal çarpma (conjunction) işlemini gerçekleştirir.' },
+      { heading: 'Sembol ve İfade', content: 'Boolean ifadesi: F = A · B (veya kısaca AB). AND işlemi mantıksal çarpma olarak da adlandırılır.' },
+      { heading: 'Uygulama Alanları', content: 'AND kapıları, etkinleştirme devreleri, adres çözümleme ve daha karmaşık mantık fonksiyonları oluşturmada kullanılır. Dijital sistemlerin temel yapı taşlarıdır.' },
     ],
     truthTable: { inputs: ['A', 'B'], output: 'F', rows: [['0','0','0'], ['0','1','0'], ['1','0','0'], ['1','1','1']] },
     expression: 'F = AB',
@@ -36,9 +36,9 @@ const lessons: Lesson[] = [
     icon: Zap,
     color: 'text-blue-400',
     sections: [
-      { heading: 'What is OR Gate?', content: 'OR gate outputs 1 (HIGH) when at least one of its inputs is 1. It outputs 0 only when ALL inputs are 0. It implements logical disjunction.' },
-      { heading: 'Symbol & Expression', content: 'Boolean expression: F = A + B. The OR operation is also called logical addition.' },
-      { heading: 'Applications', content: 'OR gates are used in alarm systems (any sensor triggers alarm), interrupt handling, and combining multiple conditions.' },
+      { heading: 'OR Gate Nedir?', content: 'OR kapısı, girişlerinden en az biri 1 (HIGH) olduğunda çıkışı 1 verir. Tüm girişler 0 olduğunda çıkış 0 olur. Mantıksal toplama (disjunction) işlemini gerçekleştirir.' },
+      { heading: 'Sembol ve İfade', content: 'Boolean ifadesi: F = A + B. OR işlemi mantıksal toplama olarak da adlandırılır.' },
+      { heading: 'Uygulama Alanları', content: 'OR kapıları alarm sistemlerinde (herhangi bir sensör alarmı tetikler), kesme işleme ve birden fazla koşulun birleştirilmesinde kullanılır.' },
     ],
     truthTable: { inputs: ['A', 'B'], output: 'F', rows: [['0','0','0'], ['0','1','1'], ['1','0','1'], ['1','1','1']] },
     expression: 'F = A + B',
@@ -49,9 +49,9 @@ const lessons: Lesson[] = [
     icon: Zap,
     color: 'text-rose-400',
     sections: [
-      { heading: 'What is NOT Gate?', content: 'NOT gate (inverter) has a single input and produces the complement (opposite) of that input. If the input is 1, the output is 0, and vice versa.' },
-      { heading: 'Symbol & Expression', content: "Boolean expression: F = A' (or F = Ā or F = ¬A). The NOT operation is called complementation or inversion." },
-      { heading: 'Applications', content: 'Inverters are used to create complementary signals, build other gates (NAND, NOR), and in feedback circuits like oscillators.' },
+      { heading: 'NOT Gate Nedir?', content: 'NOT kapısı (inverter) tek bir girişe sahiptir ve o girişin tersini (tümleyenini) üretir. Giriş 1 ise çıkış 0, giriş 0 ise çıkış 1 olur.' },
+      { heading: 'Sembol ve İfade', content: "Boolean ifadesi: F = A' (veya F = Ā veya F = ¬A). NOT işlemi tümleyen alma veya tersini alma olarak adlandırılır." },
+      { heading: 'Uygulama Alanları', content: 'Inverter\'lar tümleyen sinyaller oluşturmak, diğer kapıları (NAND, NOR) inşa etmek ve osilatör gibi geri beslemeli devrelerde kullanılır.' },
     ],
     truthTable: { inputs: ['A'], output: 'F', rows: [['0','1'], ['1','0']] },
     expression: "F = A'",
@@ -62,9 +62,9 @@ const lessons: Lesson[] = [
     icon: Zap,
     color: 'text-amber-400',
     sections: [
-      { heading: 'What is NAND Gate?', content: 'NAND gate is a universal gate — it can implement ANY Boolean function. It is an AND gate followed by a NOT gate. Output is 0 only when ALL inputs are 1.' },
-      { heading: 'Symbol & Expression', content: "Boolean expression: F = (AB)' or F = A↑B. NAND means NOT-AND." },
-      { heading: 'Why Universal?', content: 'Using only NAND gates, you can build AND, OR, NOT, and any other gate. This is why NAND gates are the most commonly used gates in integrated circuits.' },
+      { heading: 'NAND Gate Nedir?', content: 'NAND kapısı evrensel bir kapıdır — herhangi bir Boolean fonksiyonunu gerçekleştirebilir. AND kapısının ardından NOT kapısı gelir. Çıkış yalnızca tüm girişler 1 olduğunda 0 olur.' },
+      { heading: 'Sembol ve İfade', content: "Boolean ifadesi: F = (AB)' veya F = A↑B. NAND, NOT-AND anlamına gelir." },
+      { heading: 'Neden Evrensel?', content: 'Sadece NAND kapıları kullanarak AND, OR, NOT ve diğer tüm kapıları oluşturabilirsiniz. Bu nedenle NAND kapıları entegre devrelerde en yaygın kullanılan kapılardır.' },
     ],
     truthTable: { inputs: ['A', 'B'], output: 'F', rows: [['0','0','1'], ['0','1','1'], ['1','0','1'], ['1','1','0']] },
     expression: "F = (AB)'",
@@ -75,46 +75,46 @@ const lessons: Lesson[] = [
     icon: Zap,
     color: 'text-violet-400',
     sections: [
-      { heading: 'What is XOR Gate?', content: "XOR (Exclusive OR) outputs 1 when the inputs are DIFFERENT. If both inputs are the same (both 0 or both 1), the output is 0." },
-      { heading: 'Symbol & Expression', content: "Boolean expression: F = A ⊕ B = A'B + AB'. XOR detects inequality between two bits." },
-      { heading: 'Applications', content: "XOR is essential in arithmetic circuits (half adder uses XOR for sum), parity checkers, and comparison circuits." },
+      { heading: 'XOR Gate Nedir?', content: "XOR (Dışlayan VEYA) kapısı, girişler FARKLI olduğunda çıkışı 1 verir. Her iki giriş aynı ise (ikisi de 0 veya ikisi de 1) çıkış 0 olur." },
+      { heading: 'Sembol ve İfade', content: "Boolean ifadesi: F = A ⊕ B = A'B + AB'. XOR iki bit arasındaki eşitsizliği algılar." },
+      { heading: 'Uygulama Alanları', content: "XOR, aritmetik devrelerde (half adder toplam için XOR kullanır), eşlik denetleyicilerde ve karşılaştırma devrelerinde vazgeçilmezdir." },
     ],
     truthTable: { inputs: ['A', 'B'], output: 'F', rows: [['0','0','0'], ['0','1','1'], ['1','0','1'], ['1','1','0']] },
     expression: "F = A ⊕ B",
   },
   {
     id: 'flipflop',
-    title: 'Flip-Flops',
+    title: 'Flip-Flop\'lar',
     icon: GitFork,
     color: 'text-cyan-400',
     sections: [
-      { heading: 'What are Flip-Flops?', content: 'Flip-flops are sequential logic elements that store one bit of data. Unlike combinational logic, their output depends on both current inputs AND previous state. They are triggered by clock edges.' },
-      { heading: 'Types', content: 'D Flip-Flop: Stores data input on clock edge. JK Flip-Flop: J=Set, K=Reset, JK=Toggle. SR Flip-Flop: S=Set, R=Reset. T Flip-Flop: Toggles on every clock edge when T=1.' },
-      { heading: 'Applications', content: 'Flip-flops are used in registers, counters, memory circuits, state machines, and synchronization circuits. They are the building blocks of sequential logic.' },
+      { heading: 'Flip-Flop Nedir?', content: 'Flip-flop\'lar bir bit veri saklayan ardışıl mantık elemanlarıdır. Kombinasyonel mantığın aksine, çıkışları hem mevcut girişlere HEM DE önceki duruma bağlıdır. Saat kenarları ile tetiklenirler.' },
+      { heading: 'Türleri', content: 'D Flip-Flop: Saat kenarında veri girişini saklar. JK Flip-Flop: J=Set, K=Reset, JK=Toggle. SR Flip-Flop: S=Set, R=Reset. T Flip-Flop: T=1 olduğunda her saat kenarında durumu değiştirir.' },
+      { heading: 'Uygulama Alanları', content: 'Flip-flop\'lar yazmaçlarda, sayıcılarda, bellek devrelerinde, durum makinelerinde ve senkronizasyon devrelerinde kullanılır. Ardışıl mantığın temel yapı taşlarıdır.' },
     ],
   },
   {
     id: 'kmap',
-    title: 'Karnaugh Maps',
+    title: 'Karnaugh Haritası',
     icon: Grid3X3,
     color: 'text-purple-400',
     sections: [
-      { heading: 'What is a K-Map?', content: 'A Karnaugh map is a graphical method for simplifying Boolean expressions. It arranges truth table values in a grid using Gray code ordering so that adjacent cells differ by only one variable.' },
-      { heading: 'How to Use', content: 'Group adjacent 1s in powers of 2 (1, 2, 4, 8). Each group eliminates variables that change within the group. Larger groups = simpler expressions.' },
-      { heading: 'SOP vs POS', content: "SOP (Sum of Products): Group the 1s to get minterm expressions joined by OR. POS (Product of Sums): Group the 0s to get maxterm expressions joined by AND." },
-      { heading: "Don't Care Conditions", content: "Don't care (X) cells can be treated as either 0 or 1 to make larger groups. This allows further simplification when certain input combinations never occur." },
+      { heading: 'K-Map Nedir?', content: 'Karnaugh haritası, Boolean ifadelerini sadeleştirmek için kullanılan grafiksel bir yöntemdir. Doğruluk tablosu değerlerini Gray kodu sıralamasıyla bir ızgarada düzenler, böylece komşu hücreler yalnızca bir değişken ile farklılık gösterir.' },
+      { heading: 'Nasıl Kullanılır?', content: 'Komşu 1\'leri 2\'nin kuvvetleri (1, 2, 4, 8) şeklinde gruplandırın. Her grup, grup içinde değişen değişkenleri ortadan kaldırır. Daha büyük gruplar = daha basit ifadeler.' },
+      { heading: 'SOP ve POS', content: "SOP (Çarpımların Toplamı): 1'leri gruplayarak OR ile birleştirilmiş minterm ifadeleri elde edin. POS (Toplamların Çarpımı): 0'ları gruplayarak AND ile birleştirilmiş maxterm ifadeleri elde edin." },
+      { heading: "Don't Care Koşulları", content: "Don't care (X) hücreleri, daha büyük gruplar oluşturmak için 0 veya 1 olarak ele alınabilir. Belirli giriş kombinasyonlarının asla oluşmadığı durumlarda daha fazla sadeleştirme sağlar." },
     ],
   },
   {
     id: 'boolean',
-    title: 'Boolean Algebra Laws',
+    title: 'Boolean Cebri Kuralları',
     icon: Binary,
     color: 'text-pink-400',
     sections: [
-      { heading: 'Identity Laws', content: 'A + 0 = A, A · 1 = A. Adding 0 or multiplying by 1 does not change the value.' },
-      { heading: 'Complement Laws', content: "A + A' = 1, A · A' = 0. A variable ORed with its complement is always 1; ANDed is always 0." },
-      { heading: "De Morgan's Theorems", content: "(A + B)' = A'B', (AB)' = A' + B'. These theorems are fundamental for converting between SOP and POS forms." },
-      { heading: 'Simplification Tips', content: "Use factoring: AB + AC = A(B+C). Use absorption: A + AB = A. Use consensus: AB + A'C + BC = AB + A'C." },
+      { heading: 'Özdeşlik Kuralları', content: 'A + 0 = A, A · 1 = A. 0 eklemek veya 1 ile çarpmak değeri değiştirmez.' },
+      { heading: 'Tümleyen Kuralları', content: "A + A' = 1, A · A' = 0. Bir değişken tümleyeni ile OR'lanırsa daima 1, AND'lenirse daima 0 olur." },
+      { heading: "De Morgan Teoremleri", content: "(A + B)' = A'B', (AB)' = A' + B'. Bu teoremler SOP ve POS formları arasında dönüşüm için temeldir." },
+      { heading: 'Sadeleştirme İpuçları', content: "Çarpanlara ayırma: AB + AC = A(B+C). Absorpsiyon: A + AB = A. Konsensüs: AB + A'C + BC = AB + A'C." },
     ],
   },
 ];
@@ -138,7 +138,7 @@ const LearnPage = () => {
           </Link>
           <div className="w-px h-6 bg-border" />
           <h1 className="text-sm font-bold flex items-center gap-1.5">
-            <BookOpen size={14} /> Learn Digital Logic
+            <BookOpen size={14} /> Dijital Mantık Öğren
           </h1>
         </div>
 
@@ -146,7 +146,7 @@ const LearnPage = () => {
           to="/circuit-studio"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-primary bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-all"
         >
-          <CircuitBoard size={12} /> Try in Studio
+          <CircuitBoard size={12} /> Stüdyoda Dene
         </Link>
       </header>
 
@@ -155,7 +155,7 @@ const LearnPage = () => {
           <>
             <div className="text-center mb-10">
               <h2 className="text-3xl font-black mb-3">
-                Learn <span className="text-primary">Digital Logic</span>
+                <span className="text-primary">Dijital Mantık</span> Öğren
               </h2>
               <p className="text-muted-foreground max-w-md mx-auto">
                 Temel kapılardan Karnaugh haritasına, dijital mantık devrelerinin temelleri.
@@ -196,7 +196,7 @@ const LearnPage = () => {
                 onClick={() => setSelectedLesson(null)}
                 className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
               >
-                <ArrowLeft size={14} /> Back to Lessons
+                <ArrowLeft size={14} /> Derslere Dön
               </button>
 
               <div className="flex items-center gap-3 mb-6">
@@ -227,14 +227,14 @@ const LearnPage = () => {
                 <div className="lg:w-64 space-y-4">
                   {currentLesson.expression && (
                     <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
-                      <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block mb-2">Expression</span>
+                      <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block mb-2">İfade</span>
                       <p className="font-mono text-lg font-bold">{currentLesson.expression}</p>
                     </div>
                   )}
 
                   {currentLesson.truthTable && (
                     <div className="p-4 rounded-xl bg-card border border-border">
-                      <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-3">Truth Table</span>
+                      <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] block mb-3">Doğruluk Tablosu</span>
                       <table className="w-full text-center text-sm font-mono">
                         <thead>
                           <tr className="text-[10px] text-muted-foreground uppercase">
@@ -263,7 +263,7 @@ const LearnPage = () => {
                     to="/circuit-studio"
                     className="block w-full text-center py-3 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors"
                   >
-                    Try in Circuit Studio
+                    Devre Stüdyosunda Dene
                   </Link>
                 </div>
               </div>

@@ -12,8 +12,8 @@ interface CircuitTemplate {
 export const circuitTemplates: CircuitTemplate[] = [
   {
     name: 'AND Gate Demo',
-    description: 'Two inputs connected to an AND gate with LED output.',
-    category: 'Basic Gates',
+    description: 'İki giriş, AND kapısına bağlı LED çıkışı.',
+    category: 'Temel Kapılar',
     nodes: [
       { id: 't1', type: 'input', position: { x: 50, y: 80 }, data: { label: 'INPUT', logicType: 'INPUT' } },
       { id: 't2', type: 'input', position: { x: 50, y: 200 }, data: { label: 'INPUT', logicType: 'INPUT' } },
@@ -27,9 +27,9 @@ export const circuitTemplates: CircuitTemplate[] = [
     ],
   },
   {
-    name: 'XOR Gate (Manual)',
-    description: 'XOR built from AND, OR, and NOT gates.',
-    category: 'Basic Gates',
+    name: 'XOR Gate (Manuel)',
+    description: 'AND, OR ve NOT kapılarından XOR yapımı.',
+    category: 'Temel Kapılar',
     nodes: [
       { id: 'x1', type: 'input', position: { x: 50, y: 80 }, data: { label: 'INPUT', logicType: 'INPUT' } },
       { id: 'x2', type: 'input', position: { x: 50, y: 300 }, data: { label: 'INPUT', logicType: 'INPUT' } },
@@ -54,7 +54,7 @@ export const circuitTemplates: CircuitTemplate[] = [
   },
   {
     name: 'Half Adder',
-    description: 'A + B with Sum and Carry outputs displayed on LEDs.',
+    description: 'A + B toplam ve elde çıkışları LED ile gösterilir.',
     category: 'Arithmetic',
     nodes: [
       { id: 'ha1', type: 'input', position: { x: 50, y: 100 }, data: { label: 'INPUT', logicType: 'INPUT' } },
@@ -72,7 +72,7 @@ export const circuitTemplates: CircuitTemplate[] = [
   },
   {
     name: 'SR Latch',
-    description: 'SR Flip-Flop with clock and two inputs.',
+    description: 'Saat ve iki girişli SR Flip-Flop devresi.',
     category: 'Sequential',
     nodes: [
       { id: 'sr1', type: 'input', position: { x: 50, y: 60 }, data: { label: 'INPUT', logicType: 'INPUT' } },
@@ -90,7 +90,7 @@ export const circuitTemplates: CircuitTemplate[] = [
   },
   {
     name: 'D Flip-Flop Counter',
-    description: 'Clock-driven D Flip-Flop toggling output.',
+    description: 'Saat sinyaliyle çalışan D Flip-Flop sayıcı.',
     category: 'Sequential',
     nodes: [
       { id: 'dc1', type: 'clock', position: { x: 50, y: 180 }, data: { label: 'CLOCK', logicType: 'CLOCK' } },
@@ -106,7 +106,7 @@ export const circuitTemplates: CircuitTemplate[] = [
   },
   {
     name: '2x4 Decoder Demo',
-    description: '2-input decoder with 4 output LEDs.',
+    description: '2 girişli decoder ile 4 LED çıkışı.',
     category: 'MSI',
     nodes: [
       { id: 'dd1', type: 'input', position: { x: 50, y: 100 }, data: { label: 'INPUT', logicType: 'INPUT' } },

@@ -84,13 +84,13 @@ const CircuitStudio = () => {
                   : 'bg-primary text-primary-foreground hover:bg-primary/90'
                 }`}
             >
-              {isRunning ? <><Pause size={14} /> Pause</> : <><Play size={14} /> Run</>}
+              {isRunning ? <><Pause size={14} /> Duraklat</> : <><Play size={14} /> Çalıştır</>}
             </button>
             <button
               onClick={clearCanvas}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full font-semibold text-sm bg-secondary text-secondary-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
             >
-              <Trash2 size={14} /> Clear
+              <Trash2 size={14} /> Temizle
             </button>
 
             <div className="w-px h-6 bg-border mx-1" />
@@ -101,7 +101,7 @@ const CircuitStudio = () => {
                 onClick={() => { setIsSaveOpen(!isSaveOpen); setIsLoadOpen(false); }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
               >
-                <Save size={14} /> Save
+                <Save size={14} /> Kaydet
               </button>
               {isSaveOpen && (
                 <div className="absolute top-full left-0 mt-2 w-64 bg-card border border-border rounded-xl shadow-2xl p-3 z-50">
@@ -111,12 +111,12 @@ const CircuitStudio = () => {
                       value={saveName}
                       onChange={(e) => setSaveName(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleSave()}
-                      placeholder="Circuit name..."
+                      placeholder="Devre adı..."
                       className="flex-1 px-3 py-1.5 rounded-lg bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-primary"
                       autoFocus
                     />
                     <button onClick={handleSave} className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold">
-                      Save
+                      Kaydet
                     </button>
                   </div>
                 </div>
@@ -128,14 +128,14 @@ const CircuitStudio = () => {
                 onClick={() => { setIsLoadOpen(!isLoadOpen); setIsSaveOpen(false); }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
               >
-                <FolderOpen size={14} /> Load
+                <FolderOpen size={14} /> Yükle
               </button>
               {isLoadOpen && (
                 <div className="absolute top-full left-0 mt-2 w-80 bg-card border border-border rounded-xl shadow-2xl p-3 z-50 max-h-[400px] overflow-y-auto custom-scrollbar">
                   {/* Saved circuits */}
                   {savedList.length > 0 && (
                     <>
-                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] px-2 mb-1">Saved Circuits</p>
+                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] px-2 mb-1">Kayıtlı Devreler</p>
                       {savedList.map(name => (
                         <div key={name} className="flex items-center justify-between p-2 rounded-lg hover:bg-secondary/50 transition-colors group">
                           <button onClick={() => handleLoad(name)} className="text-sm text-foreground font-medium flex-1 text-left">
@@ -153,7 +153,7 @@ const CircuitStudio = () => {
                     </>
                   )}
                   {/* Templates */}
-                  <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2 mb-1">Templates</p>
+                  <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2 mb-1">Şablonlar</p>
                   {circuitTemplates.map(t => (
                     <button
                       key={t.name}
@@ -173,14 +173,14 @@ const CircuitStudio = () => {
             <button
               onClick={handleExport}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
-              title="Export JSON"
+              title="JSON Dışa Aktar"
             >
               <Download size={14} />
             </button>
             <button
               onClick={() => fileInputRef.current?.click()}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all"
-              title="Import JSON"
+              title="JSON İçe Aktar"
             >
               <Upload size={14} />
             </button>
@@ -197,7 +197,7 @@ const CircuitStudio = () => {
                     : 'bg-secondary text-secondary-foreground border-transparent hover:bg-secondary/80'
                 }`}
               >
-                <BarChart3 size={14} /> Stats
+                <BarChart3 size={14} /> İstatistik
               </button>
               {isStatsOpen && (() => {
                 const gateTypes = ['AND', 'OR', 'NOT', 'NAND', 'NOR', 'XOR', 'XNOR'];
@@ -213,16 +213,16 @@ const CircuitStudio = () => {
 
                 return (
                   <div className="absolute top-full right-0 mt-2 w-56 bg-card border border-border rounded-xl shadow-2xl p-4 z-50">
-                    <p className="text-[10px] font-black text-amber-400 uppercase tracking-[0.2em] mb-3">Circuit Statistics</p>
+                    <p className="text-[10px] font-black text-amber-400 uppercase tracking-[0.2em] mb-3">Devre İstatistikleri</p>
                     <div className="space-y-2 text-sm">
-                      <div className="flex justify-between"><span className="text-muted-foreground">Gates</span><span className="font-mono font-bold">{gateCount}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">Flip-Flops</span><span className="font-mono font-bold">{ffCount}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">MSI Components</span><span className="font-mono font-bold">{msiCount}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">Inputs</span><span className="font-mono font-bold">{inputCount}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">Outputs</span><span className="font-mono font-bold">{outputCount}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">Clocks</span><span className="font-mono font-bold">{clockCount}</span></div>
-                      <div className="border-t border-border pt-2 flex justify-between"><span className="text-muted-foreground">Wires</span><span className="font-mono font-bold">{wireCount}</span></div>
-                      <div className="flex justify-between font-bold"><span className="text-foreground">Total Components</span><span className="font-mono text-primary">{nodes.length}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Kapılar</span><span className="font-mono font-bold">{gateCount}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Flip-Flop'lar</span><span className="font-mono font-bold">{ffCount}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">MSI Bileşenler</span><span className="font-mono font-bold">{msiCount}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Girişler</span><span className="font-mono font-bold">{inputCount}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Çıkışlar</span><span className="font-mono font-bold">{outputCount}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">Saatler</span><span className="font-mono font-bold">{clockCount}</span></div>
+                      <div className="border-t border-border pt-2 flex justify-between"><span className="text-muted-foreground">Kablolar</span><span className="font-mono font-bold">{wireCount}</span></div>
+                      <div className="flex justify-between font-bold"><span className="text-foreground">Toplam Bileşen</span><span className="font-mono text-primary">{nodes.length}</span></div>
                     </div>
                   </div>
                 );
@@ -236,7 +236,7 @@ const CircuitStudio = () => {
                   : 'bg-secondary text-secondary-foreground border-transparent hover:bg-secondary/80'
               }`}
             >
-              <Activity size={14} /> Timing
+              <Activity size={14} /> Zamanlama
             </button>
             <button
               onClick={() => setIsKMapOpen(true)}
@@ -247,7 +247,7 @@ const CircuitStudio = () => {
           </div>
         </header>
 
-        <div className="flex-1 relative">
+        <div className="flex-1 relative flex flex-col">
           <CircuitCanvas />
           <TimingDiagram isOpen={isTimingOpen} onClose={() => setIsTimingOpen(false)} />
         </div>

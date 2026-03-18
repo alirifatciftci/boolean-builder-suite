@@ -1,4 +1,5 @@
 import { LogicType } from '@/store/circuitStore';
+import { Link } from 'react-router-dom';
 import {
   ToggleLeft, Lightbulb, Cpu, Box, GitFork,
   Shuffle, Binary, Plus, Monitor,
@@ -19,15 +20,15 @@ interface ComponentCategory {
 
 export const componentLibrary: ComponentCategory[] = [
   {
-    title: 'I/O Components',
+    title: 'Giriş/Çıkış Bileşenleri',
     items: [
-      { type: 'INPUT', label: 'Toggle Switch', icon: ToggleLeft, nodeType: 'input' },
-      { type: 'OUTPUT', label: 'LED Output', icon: Lightbulb, nodeType: 'output' },
-      { type: 'CLOCK', label: 'Clock Signal', icon: Cpu, nodeType: 'clock' },
+      { type: 'INPUT', label: 'Anahtar (Toggle)', icon: ToggleLeft, nodeType: 'input' },
+      { type: 'OUTPUT', label: 'LED Çıkış', icon: Lightbulb, nodeType: 'output' },
+      { type: 'CLOCK', label: 'Saat Sinyali', icon: Cpu, nodeType: 'clock' },
     ],
   },
   {
-    title: 'Basic Gates',
+    title: 'Temel Kapılar',
     items: [
       { type: 'AND', label: 'AND Gate', icon: Box, nodeType: 'gate' },
       { type: 'OR', label: 'OR Gate', icon: Box, nodeType: 'gate' },
@@ -39,7 +40,7 @@ export const componentLibrary: ComponentCategory[] = [
     ],
   },
   {
-    title: 'Sequential Logic',
+    title: 'Ardışıl Mantık',
     items: [
       { type: 'D_FF', label: 'D Flip-Flop', icon: GitFork, nodeType: 'dff' },
       { type: 'JK_FF', label: 'JK Flip-Flop', icon: GitFork, nodeType: 'jkff' },
@@ -48,7 +49,7 @@ export const componentLibrary: ComponentCategory[] = [
     ],
   },
   {
-    title: 'MSI Components',
+    title: 'MSI Bileşenler',
     items: [
       { type: 'DECODER_2x4', label: '2×4 Decoder', icon: Binary, nodeType: 'decoder' },
       { type: 'MUX_4x1', label: '4×1 Mux', icon: Shuffle, nodeType: 'mux' },
@@ -90,14 +91,14 @@ export const ComponentSidebar = ({ className }: SidebarProps) => {
   return (
     <aside className={`w-64 border-r border-border bg-card p-5 flex flex-col gap-6 overflow-y-auto custom-scrollbar ${className}`}>
       {/* Logo */}
-      <div className="flex items-center gap-2.5">
+      <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-[0_0_15px_hsl(160_84%_39%/0.4)]">
           <Cpu size={16} className="text-primary-foreground" />
         </div>
         <h1 className="text-lg font-bold tracking-tight text-foreground">
           Volt<span className="text-primary">Logic</span>
         </h1>
-      </div>
+      </Link>
 
       {/* Component categories */}
       <div className="space-y-5">
@@ -118,7 +119,7 @@ export const ComponentSidebar = ({ className }: SidebarProps) => {
       {/* Info card */}
       <div className="mt-auto p-3.5 rounded-xl bg-background/50 border border-border">
         <p className="text-[11px] text-muted-foreground leading-relaxed">
-          Drag components onto the canvas and connect handles to build circuits. Simulation runs in real-time.
+          Bileşenleri tuval üzerine sürükleyip bağlantı noktalarını birleştirerek devre kurun. Simülasyon gerçek zamanlı çalışır.
         </p>
       </div>
     </aside>

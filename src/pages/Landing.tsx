@@ -8,8 +8,8 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 
 const tools = [
   {
-    title: 'Circuit Studio',
-    description: 'Drag-and-drop ile dijital devre tasarla ve gerçek zamanlı simüle et. AND, OR, NOT, Flip-Flop, Decoder ve daha fazlası.',
+    title: 'Devre Stüdyosu',
+    description: 'Sürükle-bırak ile dijital devre tasarla ve gerçek zamanlı simüle et. AND, OR, NOT, Flip-Flop, Decoder ve daha fazlası.',
     icon: CircuitBoard,
     to: '/circuit-studio',
     color: 'from-emerald-500/20 to-cyan-500/20',
@@ -17,7 +17,7 @@ const tools = [
     iconColor: 'text-emerald-400',
   },
   {
-    title: 'K-Map Solver',
+    title: 'K-Map Çözücü',
     description: 'Karnaugh haritası ile Boolean ifadeleri sadeleştir. 2-4 değişken, SOP ve POS desteği.',
     icon: Grid3X3,
     to: '/kmap',
@@ -26,7 +26,7 @@ const tools = [
     iconColor: 'text-violet-400',
   },
   {
-    title: 'Truth Table',
+    title: 'Doğruluk Tablosu',
     description: 'Doğruluk tablosu oluştur, Boolean ifadelerini analiz et ve K-Map\'e aktar.',
     icon: Table2,
     to: '/truth-table',
@@ -35,7 +35,7 @@ const tools = [
     iconColor: 'text-amber-400',
   },
   {
-    title: 'Boolean Algebra',
+    title: 'Boolean Cebri',
     description: 'Boolean ifadelerini ayrıştır, sadeleştir ve devreye dönüştür. SOP ↔ POS dönüşümü.',
     icon: Binary,
     to: '/boolean-algebra',
@@ -46,10 +46,10 @@ const tools = [
 ];
 
 const features = [
-  { label: '7+ Logic Gate', icon: Zap },
-  { label: 'Flip-Flops', icon: Cpu },
-  { label: 'K-Map Solver', icon: Grid3X3 },
-  { label: 'Real-time Sim', icon: CircuitBoard },
+  { label: '7+ Mantık Kapısı', icon: Zap },
+  { label: 'Flip-Flop\'lar', icon: Cpu },
+  { label: 'K-Map Çözücü', icon: Grid3X3 },
+  { label: 'Gerçek Zamanlı Simülasyon', icon: CircuitBoard },
 ];
 
 const fadeUp = {
@@ -57,7 +57,7 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' },
+    transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' as const },
   }),
 };
 
@@ -81,7 +81,7 @@ const Landing = () => {
               to="/circuit-studio"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
             >
-              Circuit Studio
+              Devre Stüdyosu
             </Link>
             <Link
               to="/kmap"
@@ -93,26 +93,26 @@ const Landing = () => {
               to="/truth-table"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden md:block"
             >
-              Truth Table
+              Doğruluk Tablosu
             </Link>
             <Link
               to="/boolean-algebra"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden md:block"
             >
-              Boolean Algebra
+              Boolean Cebri
             </Link>
             <Link
               to="/learn"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden lg:block"
             >
-              Learn
+              Öğren
             </Link>
             <ThemeToggle />
             <Link
               to="/circuit-studio"
               className="px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
             >
-              Start Building
+              Başla
             </Link>
           </div>
         </div>
@@ -134,7 +134,7 @@ const Landing = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-8">
               <GraduationCap size={14} />
-              Digital Logic Design Tool
+              Dijital Mantık Tasarım Aracı
             </div>
           </motion.div>
 
@@ -144,12 +144,12 @@ const Landing = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6"
           >
-            Build, Simulate &{' '}
+            Tasarla, Simüle Et &{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
-              Simplify
+              Sadeleştir
             </span>
             <br />
-            Digital Circuits
+            Dijital Devreler
           </motion.h1>
 
           <motion.p
@@ -172,7 +172,7 @@ const Landing = () => {
               to="/circuit-studio"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_hsl(160_84%_39%/0.3)]"
             >
-              Circuit Studio
+              Devre Stüdyosu
               <ArrowRight size={18} />
             </Link>
             <Link
@@ -215,8 +215,8 @@ const Landing = () => {
             className="text-center mb-14"
           >
             <h2 className="text-3xl font-black mb-4">
-              All-in-One{' '}
-              <span className="text-primary">Logic Design</span> Suite
+              Hepsi Bir Arada{' '}
+              <span className="text-primary">Mantık Tasarım</span> Paketi
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Devre tasarımından Boolean sadeleştirmeye, ihtiyacın olan tüm araçlar tek bir yerde.
@@ -235,7 +235,7 @@ const Landing = () => {
               >
                   <Link
                   to={tool.to}
-                  className={`group relative block p-6 rounded-2xl bg-card border border-border ${tool.border} transition-all duration-300 hover:shadow-lg`}
+                  className={`group relative block p-6 rounded-2xl bg-card border border-border ${tool.border} transition-all duration-300 hover:shadow-lg h-full`}
                 >
                   <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${tool.color} opacity-0 group-hover:opacity-100 transition-opacity`} />
                   <div className="relative z-10">
@@ -266,9 +266,9 @@ const Landing = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-6">
               <BookOpen size={14} />
-              Graduation Project
+              Bitirme Projesi
             </div>
-            <h2 className="text-3xl font-black mb-4">About This Project</h2>
+            <h2 className="text-3xl font-black mb-4">Proje Hakkında</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
               VoltLogic, dijital mantık devreleri dersine yardımcı olmak amacıyla geliştirilen
               interaktif bir web uygulamasıdır. Devre tasarımı, simülasyon ve Boolean cebri
@@ -284,18 +284,25 @@ const Landing = () => {
             className="flex flex-col sm:flex-row gap-5 justify-center"
           >
             <div className="flex-1 max-w-xs mx-auto p-6 rounded-2xl bg-card border border-border">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center text-2xl font-black text-blue-400">
+                A
+              </div>
+              <h3 className="font-bold text-lg">Ali Rifat</h3>
+              <p className="text-sm text-muted-foreground mt-1">Geliştirici</p>
+            </div>
+            <div className="flex-1 max-w-xs mx-auto p-6 rounded-2xl bg-card border border-border">
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 flex items-center justify-center text-2xl font-black text-emerald-400">
                 E
               </div>
               <h3 className="font-bold text-lg">Eslem</h3>
-              <p className="text-sm text-muted-foreground mt-1">Developer</p>
+              <p className="text-sm text-muted-foreground mt-1">Geliştirici</p>
             </div>
             <div className="flex-1 max-w-xs mx-auto p-6 rounded-2xl bg-card border border-border">
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-500/20 to-purple-500/20 border border-violet-500/30 flex items-center justify-center text-2xl font-black text-violet-400">
                 S
               </div>
               <h3 className="font-bold text-lg">Seyda</h3>
-              <p className="text-sm text-muted-foreground mt-1">Developer</p>
+              <p className="text-sm text-muted-foreground mt-1">Geliştirici</p>
             </div>
           </motion.div>
         </div>
@@ -310,7 +317,7 @@ const Landing = () => {
               Volt<span className="text-primary">Logic</span>
             </span>
           </div>
-          <p>2025 - Graduation Project</p>
+          <p>2025 - Bitirme Projesi</p>
         </div>
       </footer>
     </div>

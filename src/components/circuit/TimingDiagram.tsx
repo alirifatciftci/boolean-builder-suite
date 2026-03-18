@@ -68,7 +68,7 @@ export const TimingDiagram = ({ isOpen, onClose }: TimingDiagramProps) => {
       <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-card/80 backdrop-blur-sm shrink-0">
         <div className="flex items-center gap-2">
           <Activity size={14} className="text-primary" />
-          <span className="text-xs font-bold">Timing Diagram</span>
+          <span className="text-xs font-bold">Zamanlama Diyagramı</span>
           <span className="text-[10px] text-muted-foreground font-mono">Tick: {tickCount}</span>
         </div>
         <button onClick={onClose} className="p-1 rounded hover:bg-secondary text-muted-foreground transition-colors">
@@ -80,7 +80,7 @@ export const TimingDiagram = ({ isOpen, onClose }: TimingDiagramProps) => {
       <div className="overflow-y-auto custom-scrollbar flex-1 p-3">
         {trackedNodes.length === 0 ? (
           <p className="text-xs text-muted-foreground p-4 text-center">
-            Add INPUT, OUTPUT, CLOCK or Flip-Flop components to see timing diagram.
+            Zamanlama diyagramını görmek için INPUT, OUTPUT, CLOCK veya Flip-Flop bileşenleri ekleyin.
           </p>
         ) : (
           <div className="space-y-1">
@@ -107,7 +107,7 @@ export const TimingDiagram = ({ isOpen, onClose }: TimingDiagramProps) => {
                       drawWaveform(values, color)
                     ) : (
                       <div className="h-8 flex items-center justify-center text-[10px] text-muted-foreground">
-                        Waiting for data...
+                        Veri bekleniyor...
                       </div>
                     )}
                   </div>
