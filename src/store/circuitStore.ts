@@ -13,8 +13,10 @@ import {
 export type LogicType =
   | 'AND' | 'OR' | 'NOT' | 'NAND' | 'NOR' | 'XOR' | 'XNOR'
   | 'INPUT' | 'OUTPUT' | 'CLOCK'
-  | 'D_FF' | 'JK_FF'
-  | 'DECODER_2x4' | 'MUX_4x1';
+  | 'D_FF' | 'JK_FF' | 'SR_FF' | 'T_FF'
+  | 'DECODER_2x4' | 'MUX_4x1'
+  | 'HALF_ADDER' | 'FULL_ADDER'
+  | 'SEVEN_SEG';
 
 export interface NodeData {
   label: string;
@@ -27,11 +29,17 @@ interface FlipFlopState {
   prevClock: number;
 }
 
+interface SignalHistory {
+  nodeId: string;
+  values: number[];
+}
+
 interface CircuitState {
   nodes: Node<NodeData>[];
   edges: Edge[];
   nodeValues: Record<string, number>;
   flipFlopStates: Record<string, FlipFlopState>;
+  signalHistory: SignalHistory[];
   isRunning: boolean;
   clockSignal: number;
   tickCount: number;
@@ -44,6 +52,12 @@ interface CircuitState {
   clearCanvas: () => void;
   tick: () => void;
   deleteSelected: () => void;
+  saveCircuit: (name: string) => void;
+  loadCircuit: (name: string) => boolean;
+  getSavedCircuits: () => string[];
+  deleteSavedCircuit: (name: string) => void;
+  exportCircuit: () => string;
+  importCircuit: (json: string) => boolean;
 }
 
 // Evaluate a basic gate given input values
@@ -105,6 +119,7 @@ export const useCircuitStore = create<CircuitState>((set, get) => ({
   edges: [],
   nodeValues: {},
   flipFlopStates: {},
+  signalHistory: [],
   isRunning: true,
   clockSignal: 0,
   tickCount: 0,
@@ -130,7 +145,7 @@ export const useCircuitStore = create<CircuitState>((set, get) => ({
   updateNodeValue: (id, value) =>
     set((s) => ({ nodeValues: { ...s.nodeValues, [id]: value } })),
 
-  clearCanvas: () => set({ nodes: [], edges: [], nodeValues: {}, flipFlopStates: {} }),
+  clearCanvas: () => set({ nodes: [], edges: [], nodeValues: {}, flipFlopStates: {}, signalHistory: [] }),
 
   deleteSelected: () =>
     set((s) => {
@@ -207,9 +222,39 @@ export const useCircuitStore = create<CircuitState>((set, get) => ({
         const idx = (a << 1) | b;
         // Store the active output line index
         vals[nodeId] = idx;
+      } else if (lt === 'SR_FF') {
+        const inputs = getInputsForNode(nodeId);
+        // inputs[0]=S, inputs[1]=R, inputs[2]=CLK
+        const s = inputs[0] ?? 0;
+        const r = inputs[1] ?? 0;
+        const clk = inputs[2] ?? newClock;
+        const prev = ffStates[nodeId] || { q: 0, prevClock: 0 };
+        if (clk === 1 && prev.prevClock === 0) {
+          let newQ = prev.q;
+          if (s === 0 && r === 0) newQ = prev.q;        // Hold
+          else if (s === 0 && r === 1) newQ = 0;         // Reset
+          else if (s === 1 && r === 0) newQ = 1;         // Set
+          else newQ = prev.q;                             // Invalid (hold)
+          ffStates[nodeId] = { q: newQ, prevClock: clk };
+        } else {
+          ffStates[nodeId] = { ...prev, prevClock: clk };
+        }
+        vals[nodeId] = ffStates[nodeId].q;
+      } else if (lt === 'T_FF') {
+        const inputs = getInputsForNode(nodeId);
+        // inputs[0]=T, inputs[1]=CLK
+        const t = inputs[0] ?? 0;
+        const clk = inputs[1] ?? newClock;
+        const prev = ffStates[nodeId] || { q: 0, prevClock: 0 };
+        if (clk === 1 && prev.prevClock === 0) {
+          const newQ = t === 1 ? (prev.q === 0 ? 1 : 0) : prev.q;
+          ffStates[nodeId] = { q: newQ, prevClock: clk };
+        } else {
+          ffStates[nodeId] = { ...prev, prevClock: clk };
+        }
+        vals[nodeId] = ffStates[nodeId].q;
       } else if (lt === 'MUX_4x1') {
         const inputs = getInputsForNode(nodeId);
-        // inputs[0..3] = data lines, inputs[4]=S0, inputs[5]=S1
         const d0 = inputs[0] ?? 0;
         const d1 = inputs[1] ?? 0;
         const d2 = inputs[2] ?? 0;
@@ -218,12 +263,96 @@ export const useCircuitStore = create<CircuitState>((set, get) => ({
         const s1 = inputs[5] ?? 0;
         const sel = (s1 << 1) | s0;
         vals[nodeId] = [d0, d1, d2, d3][sel];
+      } else if (lt === 'HALF_ADDER') {
+        const inputs = getInputsForNode(nodeId);
+        const a = inputs[0] ?? 0;
+        const b = inputs[1] ?? 0;
+        // Store sum in lower bit, carry in upper bit: val = carry * 2 + sum
+        vals[nodeId] = ((a & b) << 1) | (a ^ b);
+      } else if (lt === 'FULL_ADDER') {
+        const inputs = getInputsForNode(nodeId);
+        const a = inputs[0] ?? 0;
+        const b = inputs[1] ?? 0;
+        const cin = inputs[2] ?? 0;
+        const sum = a ^ b ^ cin;
+        const cout = (a & b) | (b & cin) | (a & cin);
+        vals[nodeId] = (cout << 1) | sum;
+      } else if (lt === 'SEVEN_SEG') {
+        const inputs = getInputsForNode(nodeId);
+        // 4-bit BCD input
+        const val = ((inputs[0] ?? 0) << 3) | ((inputs[1] ?? 0) << 2) | ((inputs[2] ?? 0) << 1) | (inputs[3] ?? 0);
+        vals[nodeId] = val & 0xF;
       } else {
         const inputs = getInputsForNode(nodeId);
         vals[nodeId] = evaluateGate(lt, inputs);
       }
     }
 
-    set({ clockSignal: newClock, nodeValues: vals, flipFlopStates: ffStates, tickCount: state.tickCount + 1 });
+    // Update signal history (keep last 64 ticks)
+    const MAX_HISTORY = 64;
+    const history = [...state.signalHistory];
+    const trackedNodes = state.nodes.filter(n =>
+      ['INPUT', 'OUTPUT', 'CLOCK', 'D_FF', 'JK_FF', 'SR_FF', 'T_FF'].includes(n.data.logicType)
+    );
+
+    for (const node of trackedNodes) {
+      let entry = history.find(h => h.nodeId === node.id);
+      if (!entry) {
+        entry = { nodeId: node.id, values: [] };
+        history.push(entry);
+      }
+      entry.values.push(vals[node.id] ?? 0);
+      if (entry.values.length > MAX_HISTORY) {
+        entry.values = entry.values.slice(-MAX_HISTORY);
+      }
+    }
+    // Remove entries for deleted nodes
+    const nodeIds = new Set(state.nodes.map(n => n.id));
+    const filteredHistory = history.filter(h => nodeIds.has(h.nodeId));
+
+    set({ clockSignal: newClock, nodeValues: vals, flipFlopStates: ffStates, signalHistory: filteredHistory, tickCount: state.tickCount + 1 });
+  },
+
+  saveCircuit: (name: string) => {
+    const state = get();
+    const data = { nodes: state.nodes, edges: state.edges, nodeValues: state.nodeValues };
+    const saved = JSON.parse(localStorage.getItem('voltlogic_circuits') || '{}');
+    saved[name] = data;
+    localStorage.setItem('voltlogic_circuits', JSON.stringify(saved));
+  },
+
+  loadCircuit: (name: string) => {
+    const saved = JSON.parse(localStorage.getItem('voltlogic_circuits') || '{}');
+    const data = saved[name];
+    if (!data) return false;
+    set({ nodes: data.nodes || [], edges: data.edges || [], nodeValues: data.nodeValues || {}, flipFlopStates: {} });
+    return true;
+  },
+
+  getSavedCircuits: () => {
+    const saved = JSON.parse(localStorage.getItem('voltlogic_circuits') || '{}');
+    return Object.keys(saved);
+  },
+
+  deleteSavedCircuit: (name: string) => {
+    const saved = JSON.parse(localStorage.getItem('voltlogic_circuits') || '{}');
+    delete saved[name];
+    localStorage.setItem('voltlogic_circuits', JSON.stringify(saved));
+  },
+
+  exportCircuit: () => {
+    const state = get();
+    return JSON.stringify({ nodes: state.nodes, edges: state.edges, nodeValues: state.nodeValues }, null, 2);
+  },
+
+  importCircuit: (json: string) => {
+    try {
+      const data = JSON.parse(json);
+      if (!data.nodes || !data.edges) return false;
+      set({ nodes: data.nodes, edges: data.edges, nodeValues: data.nodeValues || {}, flipFlopStates: {} });
+      return true;
+    } catch {
+      return false;
+    }
   },
 }));

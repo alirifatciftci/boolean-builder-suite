@@ -243,6 +243,187 @@ export const MuxNode = ({ id }: { id: string }) => {
   );
 };
 
+export const SRFlipFlopNode = ({ id }: { id: string }) => {
+  const value = useCircuitStore((s) => s.nodeValues[id] ?? 0);
+  const isHigh = value === 1;
+
+  return (
+    <div className={`
+      px-5 py-4 rounded-xl bg-card border transition-all min-w-[120px]
+      ${isHigh ? 'border-primary/60 shadow-[0_0_20px_hsl(160_84%_39%/0.1)]' : 'border-node-border'}
+    `}>
+      <Handle type="target" position={Position.Left} id="a" style={{ top: '25%' }} />
+      <Handle type="target" position={Position.Left} id="b" style={{ top: '50%' }} />
+      <Handle type="target" position={Position.Left} id="c" style={{ top: '75%' }} />
+
+      <div className="flex flex-col items-center gap-1">
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">SR Flip-Flop</span>
+        <div className="flex flex-col items-start gap-0.5 text-[10px] text-muted-foreground font-mono">
+          <span>S →</span>
+          <span>R →</span>
+          <span>CLK →</span>
+        </div>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-xs text-muted-foreground font-mono">Q=</span>
+          <span className={`text-lg font-mono font-bold ${isHigh ? 'text-primary' : 'text-muted-foreground'}`}>{value}</span>
+        </div>
+      </div>
+
+      <Handle type="source" position={Position.Right} id="out" />
+    </div>
+  );
+};
+
+export const TFlipFlopNode = ({ id }: { id: string }) => {
+  const value = useCircuitStore((s) => s.nodeValues[id] ?? 0);
+  const isHigh = value === 1;
+
+  return (
+    <div className={`
+      px-5 py-4 rounded-xl bg-card border transition-all min-w-[120px]
+      ${isHigh ? 'border-primary/60 shadow-[0_0_20px_hsl(160_84%_39%/0.1)]' : 'border-node-border'}
+    `}>
+      <Handle type="target" position={Position.Left} id="a" style={{ top: '35%' }} />
+      <Handle type="target" position={Position.Left} id="b" style={{ top: '65%' }} />
+
+      <div className="flex flex-col items-center gap-1">
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">T Flip-Flop</span>
+        <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-mono">
+          <span>T →</span>
+          <span>CLK →</span>
+        </div>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-xs text-muted-foreground font-mono">Q=</span>
+          <span className={`text-lg font-mono font-bold ${isHigh ? 'text-primary' : 'text-muted-foreground'}`}>{value}</span>
+        </div>
+      </div>
+
+      <Handle type="source" position={Position.Right} id="out" />
+    </div>
+  );
+};
+
+export const HalfAdderNode = ({ id }: { id: string }) => {
+  const value = useCircuitStore((s) => s.nodeValues[id] ?? 0);
+  const sum = value & 1;
+  const carry = (value >> 1) & 1;
+
+  return (
+    <div className="px-5 py-4 rounded-xl bg-card border border-node-border min-w-[130px]">
+      <Handle type="target" position={Position.Left} id="a" style={{ top: '35%' }} />
+      <Handle type="target" position={Position.Left} id="b" style={{ top: '65%' }} />
+
+      <div className="flex flex-col items-center gap-1">
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Half Adder</span>
+        <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-mono">
+          <span>A →</span>
+          <span>B →</span>
+        </div>
+        <div className="flex items-center gap-3 mt-1 text-xs font-mono">
+          <span className={sum === 1 ? 'text-primary font-bold' : 'text-muted-foreground'}>S={sum}</span>
+          <span className={carry === 1 ? 'text-amber-400 font-bold' : 'text-muted-foreground'}>C={carry}</span>
+        </div>
+      </div>
+
+      <Handle type="source" position={Position.Right} id="out" style={{ top: '35%' }} />
+      <Handle type="source" position={Position.Right} id="out2" style={{ top: '65%' }} />
+    </div>
+  );
+};
+
+export const FullAdderNode = ({ id }: { id: string }) => {
+  const value = useCircuitStore((s) => s.nodeValues[id] ?? 0);
+  const sum = value & 1;
+  const carry = (value >> 1) & 1;
+
+  return (
+    <div className="px-5 py-4 rounded-xl bg-card border border-node-border min-w-[130px]">
+      <Handle type="target" position={Position.Left} id="a" style={{ top: '25%' }} />
+      <Handle type="target" position={Position.Left} id="b" style={{ top: '50%' }} />
+      <Handle type="target" position={Position.Left} id="c" style={{ top: '75%' }} />
+
+      <div className="flex flex-col items-center gap-1">
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Full Adder</span>
+        <div className="flex flex-col items-start gap-0.5 text-[10px] text-muted-foreground font-mono">
+          <span>A →</span>
+          <span>B →</span>
+          <span>Cin →</span>
+        </div>
+        <div className="flex items-center gap-3 mt-1 text-xs font-mono">
+          <span className={sum === 1 ? 'text-primary font-bold' : 'text-muted-foreground'}>S={sum}</span>
+          <span className={carry === 1 ? 'text-amber-400 font-bold' : 'text-muted-foreground'}>Cout={carry}</span>
+        </div>
+      </div>
+
+      <Handle type="source" position={Position.Right} id="out" style={{ top: '35%' }} />
+      <Handle type="source" position={Position.Right} id="out2" style={{ top: '65%' }} />
+    </div>
+  );
+};
+
+// 7-Segment Display: BCD segments mapping
+const SEVEN_SEG_MAP: Record<number, boolean[]> = {
+  //       a     b     c     d     e     f     g
+  0:  [true, true, true, true, true, true, false],
+  1:  [false,true, true, false,false,false,false],
+  2:  [true, true, false,true, true, false,true],
+  3:  [true, true, true, true, false,false,true],
+  4:  [false,true, true, false,false,true, true],
+  5:  [true, false,true, true, false,true, true],
+  6:  [true, false,true, true, true, true, true],
+  7:  [true, true, true, false,false,false,false],
+  8:  [true, true, true, true, true, true, true],
+  9:  [true, true, true, true, false,true, true],
+  10: [true, true, true, false,true, true, true],
+  11: [false,false,true, true, true, true, true],
+  12: [true, false,false,true, true, true, false],
+  13: [false,true, true, true, true, false,true],
+  14: [true, false,false,true, true, true, true],
+  15: [true, false,false,false,true, true, true],
+};
+
+export const SevenSegNode = ({ id }: { id: string }) => {
+  const value = useCircuitStore((s) => s.nodeValues[id] ?? 0);
+  const segments = SEVEN_SEG_MAP[value] || SEVEN_SEG_MAP[0];
+  const on = 'bg-primary shadow-[0_0_6px_hsl(160_84%_39%/0.6)]';
+  const off = 'bg-muted/30';
+
+  return (
+    <div className="px-5 py-4 rounded-xl bg-card border border-node-border min-w-[100px]">
+      <Handle type="target" position={Position.Left} id="a" style={{ top: '15%' }} />
+      <Handle type="target" position={Position.Left} id="b" style={{ top: '38%' }} />
+      <Handle type="target" position={Position.Left} id="c" style={{ top: '61%' }} />
+      <Handle type="target" position={Position.Left} id="d" style={{ top: '84%' }} />
+
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.2em]">7-Seg</span>
+
+        {/* 7-segment display visual */}
+        <div className="relative w-12 h-[72px]">
+          {/* a - top */}
+          <div className={`absolute top-0 left-1 right-1 h-1.5 rounded-full ${segments[0] ? on : off}`} />
+          {/* b - top right */}
+          <div className={`absolute top-1 right-0 w-1.5 h-[30px] rounded-full ${segments[1] ? on : off}`} />
+          {/* c - bottom right */}
+          <div className={`absolute top-[37px] right-0 w-1.5 h-[30px] rounded-full ${segments[2] ? on : off}`} />
+          {/* d - bottom */}
+          <div className={`absolute bottom-0 left-1 right-1 h-1.5 rounded-full ${segments[3] ? on : off}`} />
+          {/* e - bottom left */}
+          <div className={`absolute top-[37px] left-0 w-1.5 h-[30px] rounded-full ${segments[4] ? on : off}`} />
+          {/* f - top left */}
+          <div className={`absolute top-1 left-0 w-1.5 h-[30px] rounded-full ${segments[5] ? on : off}`} />
+          {/* g - middle */}
+          <div className={`absolute top-[34px] left-1 right-1 h-1.5 rounded-full ${segments[6] ? on : off}`} />
+        </div>
+
+        <div className="text-[10px] font-mono text-muted-foreground">
+          D3-D0 → {value.toString(16).toUpperCase()}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const nodeTypes = {
   gate: GateNode,
   input: InputNode,
@@ -250,6 +431,11 @@ export const nodeTypes = {
   clock: ClockNode,
   dff: DFlipFlopNode,
   jkff: JKFlipFlopNode,
+  srff: SRFlipFlopNode,
+  tff: TFlipFlopNode,
   decoder: DecoderNode,
   mux: MuxNode,
+  halfadder: HalfAdderNode,
+  fulladder: FullAdderNode,
+  sevenseg: SevenSegNode,
 };

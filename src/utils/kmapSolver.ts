@@ -190,3 +190,129 @@ export const solveKMap = (truthTable: number[], varCount: number): string => {
 
   return terms.join(' + ');
 };
+
+// POS (Product of Sums) simplification
+export const solveKMapPOS = (truthTable: number[], varCount: number): string => {
+  const vars = varCount === 2 ? variables2 : varCount === 3 ? variables3 : variables4;
+  const totalMinterms = 1 << varCount;
+
+  // For POS, we group the 0s (maxterms) instead of 1s
+  const maxterms = truthTable
+    .slice(0, totalMinterms)
+    .map((v, i) => (v === 0 ? i : -1))
+    .filter(v => v !== -1);
+
+  const dontCares = truthTable
+    .slice(0, totalMinterms)
+    .map((v, i) => (v === 2 ? i : -1))
+    .filter(v => v !== -1);
+
+  if (maxterms.length === 0) return '1';
+  if (maxterms.length + dontCares.length === totalMinterms) return '0';
+
+  const allTerms = [...maxterms, ...dontCares];
+
+  type Implicant = { bits: string; minterms: Set<number>; used: boolean };
+
+  const toBin = (n: number) => n.toString(2).padStart(varCount, '0');
+
+  let implicants: Implicant[] = allTerms.map(m => ({
+    bits: toBin(m),
+    minterms: new Set([m]),
+    used: false,
+  }));
+
+  const primeImplicants: Implicant[] = [];
+
+  let changed = true;
+  while (changed) {
+    changed = false;
+    const next: Implicant[] = [];
+    const usedInRound = new Set<number>();
+
+    for (let i = 0; i < implicants.length; i++) {
+      for (let j = i + 1; j < implicants.length; j++) {
+        const a = implicants[i].bits;
+        const b = implicants[j].bits;
+        let diffPos = -1;
+        let diffs = 0;
+        for (let k = 0; k < varCount; k++) {
+          if (a[k] !== b[k]) {
+            diffs++;
+            diffPos = k;
+          }
+        }
+        if (diffs === 1) {
+          const newBits = a.substring(0, diffPos) + '-' + a.substring(diffPos + 1);
+          const combined = new Set([...implicants[i].minterms, ...implicants[j].minterms]);
+          const exists = next.some(n => n.bits === newBits);
+          if (!exists) {
+            next.push({ bits: newBits, minterms: combined, used: false });
+          }
+          usedInRound.add(i);
+          usedInRound.add(j);
+          changed = true;
+        }
+      }
+    }
+
+    implicants.forEach((imp, idx) => {
+      if (!usedInRound.has(idx)) {
+        primeImplicants.push(imp);
+      }
+    });
+
+    implicants = next;
+  }
+  primeImplicants.push(...implicants);
+
+  const uniquePIs: Implicant[] = [];
+  const seen = new Set<string>();
+  for (const pi of primeImplicants) {
+    if (!seen.has(pi.bits)) {
+      seen.add(pi.bits);
+      uniquePIs.push(pi);
+    }
+  }
+
+  const uncovered = new Set(maxterms);
+  const selected: Implicant[] = [];
+
+  for (const m of maxterms) {
+    const covering = uniquePIs.filter(pi => pi.minterms.has(m));
+    if (covering.length === 1) {
+      if (!selected.includes(covering[0])) {
+        selected.push(covering[0]);
+        covering[0].minterms.forEach(mt => uncovered.delete(mt));
+      }
+    }
+  }
+
+  while (uncovered.size > 0) {
+    let best: Implicant | null = null;
+    let bestCount = 0;
+    for (const pi of uniquePIs) {
+      if (selected.includes(pi)) continue;
+      const count = [...pi.minterms].filter(m => uncovered.has(m)).length;
+      if (count > bestCount) {
+        bestCount = count;
+        best = pi;
+      }
+    }
+    if (!best) break;
+    selected.push(best);
+    best.minterms.forEach(mt => uncovered.delete(mt));
+  }
+
+  // Convert to POS form: 0 in bit → variable, 1 in bit → variable complemented (opposite of SOP)
+  const terms = selected.map(pi => {
+    const literals: string[] = [];
+    for (let i = 0; i < varCount; i++) {
+      if (pi.bits[i] === '0') literals.push(vars[i]);
+      else if (pi.bits[i] === '1') literals.push(vars[i] + "'");
+    }
+    return literals.length === 0 ? '0' : '(' + literals.join(' + ') + ')';
+  });
+
+  return terms.join('');
+};

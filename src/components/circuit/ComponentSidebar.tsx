@@ -1,7 +1,7 @@
 import { LogicType } from '@/store/circuitStore';
 import {
   ToggleLeft, Lightbulb, Cpu, Box, GitFork,
-  Shuffle, Binary,
+  Shuffle, Binary, Plus, Monitor,
 } from 'lucide-react';
 import { type LucideIcon } from 'lucide-react';
 
@@ -43,8 +43,18 @@ export const componentLibrary: ComponentCategory[] = [
     items: [
       { type: 'D_FF', label: 'D Flip-Flop', icon: GitFork, nodeType: 'dff' },
       { type: 'JK_FF', label: 'JK Flip-Flop', icon: GitFork, nodeType: 'jkff' },
+      { type: 'SR_FF', label: 'SR Flip-Flop', icon: GitFork, nodeType: 'srff' },
+      { type: 'T_FF', label: 'T Flip-Flop', icon: GitFork, nodeType: 'tff' },
+    ],
+  },
+  {
+    title: 'MSI Components',
+    items: [
       { type: 'DECODER_2x4', label: '2×4 Decoder', icon: Binary, nodeType: 'decoder' },
       { type: 'MUX_4x1', label: '4×1 Mux', icon: Shuffle, nodeType: 'mux' },
+      { type: 'HALF_ADDER', label: 'Half Adder', icon: Plus, nodeType: 'halfadder' },
+      { type: 'FULL_ADDER', label: 'Full Adder', icon: Plus, nodeType: 'fulladder' },
+      { type: 'SEVEN_SEG', label: '7-Segment', icon: Monitor, nodeType: 'sevenseg' },
     ],
   },
 ];
