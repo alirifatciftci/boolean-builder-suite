@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Cpu, Zap, Grid3X3, Table2, Binary, BookOpen,
-  ArrowRight, CircuitBoard, GraduationCap,
+  Cpu, Grid3X3, Table2, Binary, BookOpen,
+  ArrowRight, CircuitBoard,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
@@ -43,13 +43,6 @@ const tools = [
     border: 'hover:border-rose-500/50',
     iconColor: 'text-rose-400',
   },
-];
-
-const features = [
-  { label: '7+ Mantık Kapısı', icon: Zap },
-  { label: 'Flip-Flop\'lar', icon: Cpu },
-  { label: 'K-Map Çözücü', icon: Grid3X3 },
-  { label: 'Gerçek Zamanlı Simülasyon', icon: CircuitBoard },
 ];
 
 const fadeUp = {
@@ -110,7 +103,7 @@ const Landing = () => {
             <ThemeToggle />
             <Link
               to="/circuit-studio"
-              className="px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
+              className="px-4 py-2 rounded-md border border-border bg-card/40 text-foreground text-sm font-semibold hover:border-primary/40 hover:bg-card transition-colors"
             >
               Başla
             </Link>
@@ -119,87 +112,185 @@ const Landing = () => {
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 px-6">
-        {/* Background glow */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
-          <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-violet-500/5 rounded-full blur-[100px]" />
+      <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+        {/* Background — schematic circuit pattern */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* PCB dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.18] dark:opacity-[0.12]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle, hsl(160 84% 39%) 1px, transparent 1px)',
+              backgroundSize: '28px 28px',
+              maskImage:
+                'radial-gradient(ellipse 80% 60% at 50% 40%, black 40%, transparent 80%)',
+              WebkitMaskImage:
+                'radial-gradient(ellipse 80% 60% at 50% 40%, black 40%, transparent 80%)',
+            }}
+          />
+
+          {/* Schematic gates + wires */}
+          <svg
+            className="absolute inset-0 w-full h-full text-primary/[0.18] dark:text-primary/[0.13]"
+            viewBox="0 0 1440 820"
+            preserveAspectRatio="xMidYMid slice"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {/* Top-left: AND gate */}
+            <g transform="translate(90, 120)">
+              <path d="M0,0 L28,0 A30,30 0 0,1 28,60 L0,60 Z" />
+              <line x1="-30" y1="15" x2="0" y2="15" />
+              <line x1="-30" y1="45" x2="0" y2="45" />
+              <line x1="58" y1="30" x2="120" y2="30" />
+              <text x="-2" y="-8" fontSize="10" fill="currentColor" stroke="none">AND</text>
+            </g>
+
+            {/* Top-right: OR gate */}
+            <g transform="translate(1210, 150)">
+              <path d="M0,0 Q14,30 0,60 Q30,30 60,30 Q30,30 0,0 Z" />
+              <line x1="-30" y1="15" x2="6" y2="15" />
+              <line x1="-30" y1="45" x2="6" y2="45" />
+              <line x1="60" y1="30" x2="120" y2="30" />
+              <text x="-2" y="-8" fontSize="10" fill="currentColor" stroke="none">OR</text>
+            </g>
+
+            {/* Mid-left: XOR gate */}
+            <g transform="translate(60, 430)">
+              <path d="M-5,0 Q9,30 -5,60" />
+              <path d="M5,0 Q19,30 5,60 Q35,30 65,30 Q35,30 5,0 Z" />
+              <line x1="-30" y1="15" x2="-2" y2="15" />
+              <line x1="-30" y1="45" x2="-2" y2="45" />
+              <line x1="65" y1="30" x2="130" y2="30" />
+              <text x="-5" y="-8" fontSize="10" fill="currentColor" stroke="none">XOR</text>
+            </g>
+
+            {/* Mid-right: NOT gate (inverter) */}
+            <g transform="translate(1260, 440)">
+              <path d="M0,0 L50,25 L0,50 Z" />
+              <circle cx="55" cy="25" r="4" />
+              <line x1="-30" y1="25" x2="0" y2="25" />
+              <line x1="59" y1="25" x2="110" y2="25" />
+              <text x="-2" y="-8" fontSize="10" fill="currentColor" stroke="none">NOT</text>
+            </g>
+
+            {/* Bottom-left: NAND gate */}
+            <g transform="translate(150, 700)">
+              <path d="M0,0 L28,0 A30,30 0 0,1 28,60 L0,60 Z" />
+              <circle cx="63" cy="30" r="4" />
+              <line x1="-30" y1="15" x2="0" y2="15" />
+              <line x1="-30" y1="45" x2="0" y2="45" />
+              <line x1="67" y1="30" x2="130" y2="30" />
+              <text x="-2" y="-8" fontSize="10" fill="currentColor" stroke="none">NAND</text>
+            </g>
+
+            {/* Bottom-right: NOR gate */}
+            <g transform="translate(1170, 690)">
+              <path d="M0,0 Q14,30 0,60 Q30,30 60,30 Q30,30 0,0 Z" />
+              <circle cx="64" cy="30" r="4" />
+              <line x1="-30" y1="15" x2="6" y2="15" />
+              <line x1="-30" y1="45" x2="6" y2="45" />
+              <line x1="68" y1="30" x2="130" y2="30" />
+              <text x="-2" y="-8" fontSize="10" fill="currentColor" stroke="none">NOR</text>
+            </g>
+
+            {/* Connecting traces between gates */}
+            <path d="M210,150 L380,150 L380,460 L60,460" opacity="0.5" />
+            <path d="M1330,180 L1430,180" opacity="0.5" />
+            <path d="M1370,465 L1430,465" opacity="0.5" />
+            <path d="M280,730 L420,730 L420,820" opacity="0.5" />
+            <path d="M1300,720 L1430,720" opacity="0.5" />
+
+            {/* Small K-Map grid hint (top-mid-left) */}
+            <g transform="translate(310, 280)" opacity="0.6">
+              <rect x="0" y="0" width="20" height="20" />
+              <rect x="20" y="0" width="20" height="20" />
+              <rect x="40" y="0" width="20" height="20" />
+              <rect x="60" y="0" width="20" height="20" />
+              <rect x="0" y="20" width="20" height="20" />
+              <rect x="20" y="20" width="20" height="20" />
+              <rect x="40" y="20" width="20" height="20" />
+              <rect x="60" y="20" width="20" height="20" />
+              <text x="22" y="14" fontSize="9" fill="currentColor" stroke="none">1</text>
+              <text x="42" y="14" fontSize="9" fill="currentColor" stroke="none">1</text>
+              <text x="42" y="34" fontSize="9" fill="currentColor" stroke="none">1</text>
+            </g>
+
+            {/* Truth table hint (top-mid-right) */}
+            <g transform="translate(1040, 310)" opacity="0.6" fontSize="9" fill="currentColor" stroke="none">
+              <text x="0" y="0" stroke="currentColor" strokeWidth="0.5">A B | F</text>
+              <text x="0" y="14">0 0 | 0</text>
+              <text x="0" y="28">0 1 | 1</text>
+              <text x="0" y="42">1 0 | 1</text>
+              <text x="0" y="56">1 1 | 0</text>
+            </g>
+          </svg>
+
+          {/* Soft center glow to focus on text */}
+          <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[700px] h-[420px] bg-primary/[0.05] rounded-full blur-[120px]" />
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-8">
-              <GraduationCap size={14} />
-              Dijital Mantık Tasarım Aracı
-            </div>
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6"
+            className="text-4xl sm:text-5xl lg:text-[5rem] font-black tracking-tight leading-[1.05] mb-6"
           >
-            Tasarla, Simüle Et &{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
-              Sadeleştir
-            </span>
+            Dijital mantık devreleri,
             <br />
-            Dijital Devreler
+            tarayıcıda.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed"
           >
-            Dijital mantık devrelerini interaktif olarak tasarla, gerçek zamanlı simüle et
-            ve Karnaugh haritası ile Boolean ifadeleri sadeleştir.
+            Sürükle-bırak ile devre kur, K-Map ile sadeleştir,
+            doğruluk tablosunu anında gör.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             <Link
               to="/circuit-studio"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_hsl(160_84%_39%/0.3)]"
+              className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-lg border border-border bg-card/40 text-foreground font-semibold text-[15px] hover:border-primary/40 hover:bg-card transition-all hover:translate-y-[-1px]"
             >
-              Devre Stüdyosu
-              <ArrowRight size={18} />
+              <CircuitBoard size={17} className="text-primary" />
+              Devre Stüdyosunu Aç
             </Link>
             <Link
               to="/kmap"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-secondary text-secondary-foreground font-bold text-base hover:bg-secondary/80 transition-colors border border-border"
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              K-Map Solver
-              <Grid3X3 size={18} />
+              K-Map çözücüye git
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
 
-          {/* Feature badges */}
+          {/* Stats — monospace status line */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-wrap justify-center gap-3 mt-12"
+            className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 mt-16 text-[11px] font-mono uppercase tracking-[0.15em] text-muted-foreground/70"
           >
-            {features.map((f) => (
-              <div
-                key={f.label}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-card border border-border text-xs font-medium text-muted-foreground"
-              >
-                <f.icon size={12} className="text-primary" />
-                {f.label}
-              </div>
-            ))}
+            <span><span className="text-foreground font-bold">7</span> kapı</span>
+            <span className="opacity-30">/</span>
+            <span><span className="text-foreground font-bold">4</span> flip-flop</span>
+            <span className="opacity-30">/</span>
+            <span><span className="text-foreground font-bold">5</span> msi bileşen</span>
+            <span className="opacity-30">/</span>
+            <span><span className="text-foreground font-bold">2–4</span> değişken k-map</span>
           </motion.div>
         </div>
       </section>
